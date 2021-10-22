@@ -14,13 +14,13 @@ ota:
   password: ""
 
 wifi:
-  ssid: ""
-  password: ""
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Node-Mcu Fallback Hotspot"
-    password: ""
+    password: !secret wifi_ap_fallback_password
 
 captive_portal:
 
@@ -33,6 +33,9 @@ spi:
 time:
   - platform: homeassistant
     id: homeassistant_time
+sun:
+  latitude: 59.9209533°
+  longitude: 10.7829543°
 
 font:
   - file: "fonts/roboto-thin.ttf"
@@ -106,7 +109,7 @@ display:
         auto time = id(homeassistant_time).now();
 
        // ESP_LOGD("lambda", "hour is %d", time.hour);
-        if(condition == "sunny" && (time.hour < 6 || time.hour > 22)) {
+        if(condition == "sunny" && sun_sun->elevation() < -0.83333f ) {
           conditionImage = clear_night;
         }
 
@@ -115,7 +118,7 @@ display:
         it.image(165, 10, conditionImage);
       }
       if(id(ute_temp_sensor).state) {
-        it.printf(180, 75, id(roboto), TextAlign::TOP_CENTER, "%.1f°C", id(ute_temp_sensor).state);
+        it.printf(200, 75, id(roboto), TextAlign::TOP_CENTER, "%.1f°C", id(ute_temp_sensor).state);
        }
       
 
@@ -137,8 +140,8 @@ sensor:
     name: "Outside temp"
     entity_id: sensor.temperature_2
     id: ute_temp_sensor
-    # on_value:
-    #     - component.update: display4_2
+    on_value:
+      - component.update: display4_2
       
   - platform: homeassistant
     name: "Bad temp"
@@ -162,6 +165,11 @@ text_sensor:
     on_value:
         - delay: 5s
         - component.update: display4_2
+        - if:
+            condition:
+              - sun.is_above_horizon:
+            then:
+              - logger.log: Sun is above horizon!
 
 image:
   - resize: 70x70
