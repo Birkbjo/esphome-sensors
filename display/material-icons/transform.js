@@ -56,15 +56,12 @@ const generateEspHomeYaml = (imagePaths, outFolder, imageOpts) => {
     };
 
     return yaml.stringify(doc);
-    //console.log(yamlStruct)
-    //doc.contents =
 };
 
 const main = async () => {
-    //await convertToPng()
-
     const readFolder = "original";
     const writeFolder = "pngs";
+
     const files = fs
         .readdirSync(readFolder, { withFileTypes: true })
         .filter((dirent) => dirent.isFile && !isUnixHiddenPath(dirent.name))
@@ -79,6 +76,7 @@ const main = async () => {
     const yaml = generateEspHomeYaml(names, outFolder, {
         resize: "70x70",
     });
+
     console.log(yaml);
 };
 
