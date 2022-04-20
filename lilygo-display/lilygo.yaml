@@ -10,14 +10,15 @@ substitutions:
   sleep_time: 15min # normal sleep time
   away_sleep_time: 1h # sleep time when nobody's at home
   night_sleep_time: 6.5h # 1st sleep time after midnight
-
+  font_glyphs: |-
+      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyzæøå
 esphome:
   name: ${esp_hostname}
   platform: ESP32
   board: esp32dev
 
 wifi:
-  ssid: !secret wifi_ssd
+  ssid: !secret wifi_ssid
   password: !secret wifi_password
 
 # deep_sleep:
@@ -49,7 +50,7 @@ time:
 
 # Enable Home Assistant API
 api:
-  password: !secret ota_password
+  password: ""
 # sun:
 #     latitude: 50.0260°
 #     longitude: 14.2835°
@@ -74,51 +75,24 @@ font:
   - file: "fonts/Roboto-Light.ttf"
     id: font_name
     size: 40
-    glyphs:
-      ['&', '@', '!', ',', '.', '"', '%', '(', ')', '+', '-', '_', ':', '°', '0',
-       '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
-       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
-       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-       'u', 'v', 'w', 'x', 'y', 'z','å', 'æ', 'ø', '/']
+    glyphs: ${font_glyphs}
   - file: "fonts/Roboto-Light.ttf"
     id: font_value
     size: 64
-    glyphs:
-      ['&', '@', '!', ',', '.', '"', '%', '(', ')', '+', '-', '_', ':', '°', '0',
-       '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
-       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
-       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-       'u', 'v', 'w', 'x', 'y', 'z','å', 'æ', 'ø', '/']
+    glyphs: ${font_glyphs}
   - file: "fonts/Roboto-Light.ttf"
     id: font_footer
     size: 28
-    glyphs: ['&', '@', '!', ',', '.', '"', '%', '(', ')', '+', '-', '_', ':', '°', '0',
-       '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
-       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
-       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-       'u', 'v', 'w', 'x', 'y', 'z','å', 'æ', 'ø', '/']
+    glyphs: ${font_glyphs}
   - file: "fonts/Roboto-Medium.ttf"
     id: font_small
     size: 28
-    glyphs: ['&', '@', '!', ',', '.', '"', '%', '(', ')', '+', '-', '_', ':', '°', '0',
-       '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
-       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
-       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-       'u', 'v', 'w', 'x', 'y', 'z','å', 'æ', 'ø', '/']
+    glyphs: ${font_glyphs}
     # https://pictogrammers.github.io/@mdi/font/5.3.45/
   - file: "fonts/Roboto-Medium.ttf"
     id: font_small_reg
     size: 28
-    glyphs: ['&', '@', '!', ',', '.', '"', '%', '(', ')', '+', '-', '_', ':', '°', '0',
-       '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
-       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
-       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-       'u', 'v', 'w', 'x', 'y', 'z','å', 'æ', 'ø', '/']
+    glyphs: ${font_glyphs}
     # https://pictogrammers.github.io/@mdi/font/5.3.45/
   - file: "materialdesignicons-webfont.ttf"
     id: font_icons
