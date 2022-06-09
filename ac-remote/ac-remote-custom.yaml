@@ -1,0 +1,61 @@
+substitutions:
+  esp_name: AC Remote #Device Name
+  esp_hostname: esp-ac-remote
+
+esphome:
+  name: ${esp_hostname}
+  platform: ESP8266
+  board: d1_mini
+  includes: 
+  - woods_ir.h
+  libraries:
+  - IRremoteESP8266
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+captive_portal:
+
+api:
+  password: ""
+  services:
+    - service: send_raw_command
+      variables:
+        command: int[]
+      then:
+        - remote_transmitter.transmit_raw:
+            code: !lambda 'return command;'
+ota:
+  password: !secret ota_password
+
+# Enable logging
+logger:
+
+remote_receiver:
+  pin: 
+    number: D4
+    inverted: True
+  dump: all
+
+remote_transmitter:
+  pin:
+    number: D3
+  carrier_duty_percent: 50%
+
+
+sensor:
+  - platform: homeassistant
+    entity_id: sensor.somneo_temperature
+    id: bedroom_temp
+    internal: true
+
+climate:
+  - platform: custom
+    lambda: |-
+      auto woodsac = new WoodsAC();
+      woodsac->set_sensor(id(bedroom_temp));
+      App.register_component(woodsac);
+      return {woodsac};
+    climates:
+      - name: "AC"
