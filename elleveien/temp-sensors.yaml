@@ -16,7 +16,7 @@ ota:
     password: !secret api_password
 
 wifi:
-  ssid: "EA"
+  ssid: !secret wifi_ssid
   password: !secret wifi_password
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
@@ -25,17 +25,29 @@ wifi:
     password: !secret ap_password
 
 captive_portal:
-    
+
 one_wire:
   - platform: gpio
-    pin: D4 #GPIO5 #D1
+    pin: D4
 
 sensor:
   - platform: dallas_temp
-    address: 0x0100000001bf1528
+    address: 0xb06f92d44524a728
     name: pipe_temperature_1
-    update_interval: 60s
+    update_interval: 5s
   - platform: dallas_temp
-    address: 0x8e00000001efd228
+    address: 0x690000006c84ac28
     name: pipe_temperature_2
-    update_interval: 60s
+    update_interval: 5s
+  - platform: dallas_temp
+    address: 0x7729c9d4431a3e28
+    name: pipe_temperature_3
+    update_interval: 5s
+  - platform: dallas_temp
+    address: 0xcc6b1cd445a53428
+    name: pipe_temperature_4
+    update_interval: 5s
+  - platform: dallas_temp
+    address: 0x0100000001bf1528
+    name: pipe_temperature_5
+    update_interval: 5s
